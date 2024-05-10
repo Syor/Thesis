@@ -25,6 +25,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('redmine_login', (user) => {
+    cy.visit('http://localhost:8080/')
     cy.get('a[href="/login"]').click()
     cy.get('input[id="username"]').type(user.username)
     cy.get('input[id="password"]').type(user.password)
@@ -39,4 +40,11 @@ Cypress.Commands.add('redmine_deleteIssue', () => {
 
 Cypress.Commands.add('trac_login', (user) => {
     cy.visit('http://' + user.username + ':' + user.password + '@localhost:8123/');
+})
+
+Cypress.Commands.add('tracks_login', (user) => {
+    cy.visit('http://localhost:80/')
+    cy.get('input[id="user_login"]').type(user.username)
+    cy.get('input[id="user_password"]').type(user.password)
+    cy.get('input[value="Sign in"]').click()
 })

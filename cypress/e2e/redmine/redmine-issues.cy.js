@@ -39,7 +39,6 @@ describe('issues', () => {
     //end date - not inserted
 
     //estimated time - empty
-
     cy.xpath('//form/input[@value="Create"]').click();
 
 
