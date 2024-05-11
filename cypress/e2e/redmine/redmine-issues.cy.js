@@ -1,6 +1,5 @@
 describe('issues', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:8080/')
     cy.redmine_login(Cypress.env("redmine_basicUser"))
     cy.visit('http://localhost:8080/projects/test-project/issues');
     cy.xpath('//div[@id="content"]/div/a').click()
