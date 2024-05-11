@@ -5,8 +5,7 @@ describe("newIssue" , () => {
     })
 
     it.skip('testcase4', () => {
-        const currentDate = new Date();
-        const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
+        
         //4	Valid	Default	NonEmpty	Task	WithoutDueDate	PastVersion	blocker	component1	FALSE	Empty	NonEmpty	Other  Low
         //summary valid
         const summary = "TestCase4 " + currentDateString
