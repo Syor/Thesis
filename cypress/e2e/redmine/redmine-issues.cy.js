@@ -5,104 +5,143 @@ describe('issues', () => {
     cy.xpath('//div[@id="content"]/div/a').click()
   })
 
-  it.skip('test case no. 2', () => {
+  it.skip('test case no. 4', () => {
     const currentDate = new Date();
     const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
+    //4				Valid	Me	New	Empty	NotChosen	Chosen	Current	NotInserted	Valid
     //subject - Valid
-    cy.get('input[id="issue_subject"]').type("TestCaseNum2 " + currentDateString);
+    const subject = "TestCaseNum4 " + currentDateString;
+    cy.get('input[id="issue_subject"]').type(subject);
 
     //assignee - Me
     cy.get('a[data-id="5"]').click();
 
-    //category - Any
-    cy.get('select[id="issue_category_id"]').select('AnyCategory');
+    //category - new
+    const category = "Category " + currentDateString
+    cy.get('a[title="New category"]').click();
+    cy.get('input[id="issue_category_name"]').type(category);
+    cy.xpath('//p/input[@value="Create"]').click();
+
+    //Target version - empty
+
+    //file - not chosen
+
+    //parent task - Chosen
+    //sadly this is the only reliable way to do it
+    cy.wait(500)
+    cy.get('input[id="issue_parent_issue_id"]').type('1');
+
+    //start date - current
+    const startDate = new Date();
+    startDate.setDate(currentDate.getDate())
+    const dayStart = startDate.getDate().toString().padStart(2, '0');
+    const monthStart = (startDate.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 because months are zero-indexed
+    const yearStart = startDate.getFullYear();
+    const formattedStartDate = `${monthStart}/${dayStart}/${yearStart}`;
+
+    cy.get('input[id="issue_start_date"]').invoke('val', startDate.toISOString().split('T')[0]).trigger('input');
+
+    //end date - not inserted
+
+    //estimated time - valid
+    const estimatedTime = 10;
+    cy.get('input[id="issue_estimated_hours"]').type(estimatedTime);
+
+
+    cy.xpath('//form/input[@value="Create"]').click();
+
+
+    cy.get('div[id="flash_notice"]').should('exist');
+
+    cy.contains(subject).should('exist')
+    
+    cy.contains('Basic Assignee').should('exist')
+
+    cy.contains(category).should('exist')
+
+    cy.contains('ParentIssue').should('exist')
+
+    cy.contains(formattedStartDate).should('exist')
+
+    cy.contains(estimatedTime).should('exist')
+  })
+
+
+  it.skip('test case no. 2', () => {
+    const currentDate = new Date();
+    const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
+    //2				Valid	Empty	New	New	Chosen	Chosen	Future	NotInserted	Empty
+    //subject - Valid
+    const subject = "TestCaseNum2 " + currentDateString
+    cy.get('input[id="issue_subject"]').type(subject);
+
+    //assignee - empty
+
+    //category - new  
+    const category = "Category " + currentDateString
+    cy.get('a[title="New category"]').click();
+    cy.get('input[id="issue_category_name"]').type(category);
+    cy.xpath('//p/input[@value="Create"]').click();
 
     //Target version - New
-
-    /*cy.get('a[title="New version"]').click();
-    cy.get('input[id="version_name"]').type("1.0 " + currentDateString);
-    cy.xpath('//p/input[@value="Create"]').click();*/
+    const version = "1.1 " + currentDateString
+    cy.get('a[title="New version"]').click();
+    cy.get('input[id="version_name"]').type(version);
+    cy.xpath('//p/input[@value="Create"]').click();
 
     //file - Chosen
     cy.get('input[type="file"]').selectFile('cypress\\fixtures\\SampleFile.txt');
 
     //parent task - Chosen
+    //sadly this is the only reliable way to do it
     cy.wait(500)
-    cy.get('input[id="issue_parent_issue_id"]').type('17');
+    cy.get('input[id="issue_parent_issue_id"]').type('1');
 
     //start date - future
-    const futureDate = new Date();
-    futureDate.setDate(currentDate.getDate() + 10)
-    cy.get('input[id="issue_start_date"]').invoke('val', futureDate.toISOString().split('T')[0]).trigger('input');
+    const startDate = new Date();
+    startDate.setDate(currentDate.getDate() + 10)
+    const dayStart = startDate.getDate().toString().padStart(2, '0');
+    const monthStart = (startDate.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 because months are zero-indexed
+    const yearStart = startDate.getFullYear();
+    const formattedStartDate = `${monthStart}/${dayStart}/${yearStart}`;
+
+    cy.get('input[id="issue_start_date"]').invoke('val', startDate.toISOString().split('T')[0]).trigger('input');;
 
     //end date - not inserted
 
     //estimated time - empty
-    cy.xpath('//form/input[@value="Create"]').click();
-
-
-    cy.get('div[id="flash_notice"]').should('exist');
-
-    if (Cypress.env("cleanup")) {
-      cy.redmine_deleteIssue();
-    }
-  })
-
-
-  it.skip('test case no. 11', () => {
-    const currentDate = new Date();
-    const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
-    //subject - Valid
-    cy.get('input[id="issue_subject"]').type("TestCaseNum11 " + currentDateString);
-
-    //assignee - Other
-    cy.get('select[id="issue_assigned_to_id"]').select('Other Assignee');
-
-    //category - Any
-    cy.get('select[id="issue_category_id"]').select('AnyCategory');
-
-    //Target version - New
-
-    /*cy.get('a[title="New version"]').click();
-    cy.get('input[id="version_name"]').type("1.0 " + currentDateString);
-    cy.xpath('//p/input[@value="Create"]').click();*/
-
-    //file - Chosen
-    cy.get('input[type="file"]').selectFile('cypress\\fixtures\\SampleFile.txt');
-
-    //parent task - not chosen
-
-    //start date - future
-    const futureDate = new Date();
-    futureDate.setDate(currentDate.getDate() + 10)
-    cy.get('input[id="issue_start_date"]').invoke('val', futureDate.toISOString().split('T')[0]).trigger('input');
-
-    //end date - more than start
-    futureDate.setDate(futureDate.getDate() + 10)
-    cy.get('input[id="issue_due_date"]').invoke('val', futureDate.toISOString().split('T')[0]).trigger('input');
-
-    //estimated time - valid
-    cy.get('input[id="issue_estimated_hours"]').type(10);
 
 
     cy.xpath('//form/input[@value="Create"]').click();
 
     cy.get('div[id="flash_notice"]').should('exist');
 
-    if (Cypress.env("cleanup")) {
-      cy.redmine_deleteIssue();
-    }
+    cy.contains(subject).should('exist')
+    
+    cy.contains('Basic Assignee').should('exist')
+
+    cy.contains(category).should('exist')
+
+    cy.contains(version).should('exist')
+
+    cy.contains('SampleFile.txt').should('exist')
+
+    cy.contains(formattedStartDate).should('exist')
   })
 
-  it.skip('test case no. 16', () => {
+  it.skip('test case no. 1', () => {
     const currentDate = new Date();
     const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
+    //1				Invalid	Me	Any	Any	NotChosen	NotChosen	Current	LessThenStart	Empty
+
     //subject - Invalid
 
-    //assignee - Empty
+    //assignee - Me
+    cy.get('a[data-id="5"]').click();
 
     //category - Any
-    cy.get('select[id="issue_category_id"]').select('AnyCategory');
+    const category = "AnyCategory"
+    cy.get('select[id="issue_category_id"]').select(category);
 
     //Target version - Any (default)
 
@@ -114,9 +153,13 @@ describe('issues', () => {
     //start date - current (default)
 
     //end date - less than start
-    const futureDate = new Date();
-    futureDate.setDate(currentDate.getDate() - 10)
-    cy.get('input[id="issue_due_date"]').invoke('val', futureDate.toISOString().split('T')[0]).trigger('input');
+    const endDate = new Date()
+    endDate.setDate(currentDate.getDate() - 10)
+    const dayEnd = endDate.getDate().toString().padStart(2, '0');
+    const monthEnd = (endDate.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 because months are zero-indexed
+    const yearEnd = endDate.getFullYear();
+    const formattedEndDate = `${monthEnd}/${dayEnd}/${yearEnd}`;
+    cy.get('input[id="issue_due_date"]').invoke('val', endDate.toISOString().split('T')[0]).trigger('input');
 
     //estimated time - Empty
 
@@ -126,85 +169,99 @@ describe('issues', () => {
     cy.contains("Due date must be greater than start date").should('exist');
   })
 
-  it.skip('test case no. 20', () => {
+  it.skip('test case no. 14', () => {
     const currentDate = new Date();
     const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
+    //14				Valid	Empty	New	New	NotChosen	NotChosen	Current	LessThenStart	Valid
+
     //subject - Valid
-    cy.get('input[id="issue_subject"]').type("TestCaseNum20 " + currentDateString);
+    const subject = "TestCaseNum14 " + currentDateString
+    cy.get('input[id="issue_subject"]').type(subject);
 
     //assignee - Empty (default)
 
-    //category - Any
-    cy.get('select[id="issue_category_id"]').select('AnyCategory');
+    //category - new  
+    const category = "Category " + currentDateString
+    cy.get('a[title="New category"]').click();
+    cy.get('input[id="issue_category_name"]').type(category);
+    cy.xpath('//p/input[@value="Create"]').click();
 
-    //Target version - Any (default)
+    //Target version - New
+    const version = "1.1 " + currentDateString
+    cy.get('a[title="New version"]').click();
+    cy.get('input[id="version_name"]').type(version);
+    cy.xpath('//p/input[@value="Create"]').click();
 
-    //file - Chosen
-    cy.get('input[type="file"]').selectFile('cypress\\fixtures\\SampleFile.txt');
+    //file - not chosen
 
-    //parent task - Chosen
-    cy.wait(500)
-    cy.get('input[id="issue_parent_issue_id"]').type('17');
+    //parent task - not chosen
 
     //start date - current(default)
 
 
     //end date - less than start
-    const futureDate = new Date();
-    futureDate.setDate(currentDate.getDate() - 10)
-    cy.get('input[id="issue_due_date"]').invoke('val', futureDate.toISOString().split('T')[0]).trigger('input');
+    const endDate = new Date()
+    endDate.setDate(currentDate.getDate() - 10)
+    const dayEnd = endDate.getDate().toString().padStart(2, '0');
+    const monthEnd = (endDate.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 because months are zero-indexed
+    const yearEnd = endDate.getFullYear();
+    const formattedEndDate = `${monthEnd}/${dayEnd}/${yearEnd}`;
+    cy.get('input[id="issue_due_date"]').invoke('val', endDate.toISOString().split('T')[0]).trigger('input');
 
-    //estimated time - invalid
-    cy.get('input[id="issue_estimated_hours"]').type("-10");
+    //estimated time - valid
+    const estimatedTime = 10
+    cy.get('input[id="issue_estimated_hours"]').type(estimatedTime);
 
 
     cy.xpath('//form/input[@value="Create"]').click();
 
-    cy.contains("Estimated time is invalid").should('exist');
     cy.contains("Due date must be greater than start date").should('exist');
   })
 
-  it('test case no. 3', () => {
+  it.skip('test case no. 7', () => {
     const currentDate = new Date();
     const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
+    //7				Valid	Me	Empty	New	Chosen	NotChosen	Current	MoreThenStart	Invalid
+    
     //subject - Valid
-    cy.get('input[id="issue_subject"]').type("TestCaseNum3 " + currentDateString);
+    const subject = "TestCaseNum7 " + currentDateString;
+    cy.get('input[id="issue_subject"]').type(subject);
 
     //assignee - Me
     cy.get('a[data-id="5"]').click();
 
-    //category - Any
-    cy.get('a[title="New category"]').click();
-    cy.get('input[id="issue_category_name"]').type("Category " + currentDateString);
+    //category - empty
+
+    //Target version - New
+    const version = "1.1 " + currentDateString
+    cy.get('a[title="New version"]').click();
+    cy.get('input[id="version_name"]').type(version);
     cy.xpath('//p/input[@value="Create"]').click();
 
-    //Target version - empty
+    //file - Chosen
+    cy.get('input[type="file"]').selectFile('cypress\\fixtures\\SampleFile.txt');
 
-    //file - Not chosen
+    //parent task - not chosen
 
-    //parent task - Chosen
-    cy.wait(500)
-    cy.get('input[id="issue_parent_issue_id"]').type('17');
+    //start date - current (default)
 
-    //start date - past
-    const futureDate = new Date();
-    futureDate.setDate(currentDate.getDate() - 10)
-    cy.get('input[id="issue_start_date"]').invoke('val', futureDate.toISOString().split('T')[0]).trigger('input');
+    ///end date - more than start
+    const endDate = new Date()
+    endDate.setDate(currentDate.getDate() + 10)
+    const dayEnd = endDate.getDate().toString().padStart(2, '0');
+    const monthEnd = (endDate.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 because months are zero-indexed
+    const yearEnd = endDate.getFullYear();
+    const formattedEndDate = `${monthEnd}/${dayEnd}/${yearEnd}`;
+    cy.get('input[id="issue_due_date"]').invoke('val', endDate.toISOString().split('T')[0]).trigger('input');
 
-    //end date -more than start
-    futureDate.setDate(futureDate.getDate() + 10)
-    cy.get('input[id="issue_due_date"]').invoke('val', futureDate.toISOString().split('T')[0]).trigger('input');
+    //estimated time - invalid
+    const estimatedTime = -10;
+    cy.get('input[id="issue_estimated_hours"]').type(estimatedTime);
 
-    //estimated time - valid
-    cy.get('input[id="issue_estimated_hours"]').type("10");
+
 
     cy.xpath('//form/input[@value="Create"]').click();
 
-
-    cy.get('div[id="flash_notice"]').should('exist');
-
-    if (Cypress.env("cleanup")) {
-      cy.redmine_deleteIssue();
-    }
+    cy.contains('Estimated time is invalid').should('exist')
   })
 })
