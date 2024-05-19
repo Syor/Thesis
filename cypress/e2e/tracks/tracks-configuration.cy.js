@@ -5,7 +5,7 @@ describe("newAction", () => {
         cy.get('a[id="ui-id-4"]').click()
     })
 
-    it.skip('test case n. 1', () => {
+    it('test case n. 1', () => {
         //1	DueIn	FALSE	FALSE	FALSE	FALSE	Positive
 
         const due = 'Due in ___ days'
@@ -62,7 +62,7 @@ describe("newAction", () => {
         cy.url().should('eq', 'http://localhost/')
     })
 
-    it.skip('test case n. 3', () => {
+    it('test case n. 3', () => {
         //3	DueIn	TRUE	FALSE	TRUE	FALSE	Zero
 
         const due = 'Due in ___ days'
@@ -119,7 +119,7 @@ describe("newAction", () => {
         cy.url().should('eq', 'http://localhost/')
     })
 
-    it.skip('test case n. 4', () => {
+    it('test case n. 4', () => {
         //4	DueOn	FALSE	TRUE	FALSE	TRUE	Zero
 
         const due = 'Due on _______'
@@ -176,7 +176,7 @@ describe("newAction", () => {
         cy.url().should('not.eq', 'http://localhost/')
     })
 
-    it.skip('test case n. 6', () => {
+    it('test case n. 6', () => {
         //6	DueOn	FALSE	FALSE	TRUE	TRUE	Negative
 
         const due = 'Due on _______'
@@ -204,4 +204,35 @@ describe("newAction", () => {
         //havent found anything in documentation, probably will submit a new issue on git
 
     })
+
+    it('test case n. 8', () => {
+        //8	DueOn	FALSE	FALSE	TRUE	FALSE	Invalid
+
+        const due = 'Due on _______'
+        cy.get('select[id="prefs_due_style"]').select(due)
+
+        //ShowCompletedProjects	false
+        cy.get('select[id="prefs_show_completed_projects_in_sidebar"]').select('false')
+
+        //ShowHiddenProjects false
+        cy.get('select[id="prefs_show_hidden_projects_in_sidebar"]').select('false')
+
+        //ShowHiddenContexts true
+        cy.get('select[id="prefs_show_hidden_contexts_in_sidebar"]').select('true')
+
+        //GoToProject false
+        cy.get('select[id="prefs_show_project_on_todo_done"]').select('false')
+
+        //ShowNumberOfCompleted invalid
+        const NumberOfCompleted = "abc"
+        cy.get('input[id="prefs_show_number_completed"]').clear().type(NumberOfCompleted)
+
+        cy.get('button[id="prefs_submit"]').click()
+
+        //here some alert that a invalid value was set into a integer only field
+        //havent found anything in documentation, probably will submit a new issue on git
+
+    })
+
+
 })

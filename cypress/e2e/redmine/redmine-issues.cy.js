@@ -5,7 +5,7 @@ describe('issues', () => {
     cy.xpath('//div[@id="content"]/div/a').click()
   })
 
-  it.skip('test case no. 4', () => {
+  it('test case no. 4', () => {
     const currentDate = new Date();
     const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
     //4				Valid	Me	New	Empty	NotChosen	Chosen	Current	NotInserted	Valid
@@ -67,7 +67,7 @@ describe('issues', () => {
   })
 
 
-  it.skip('test case no. 2', () => {
+  it('test case no. 2', () => {
     const currentDate = new Date();
     const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
     //2				Valid	Empty	New	New	Chosen	Chosen	Future	NotInserted	Empty
@@ -129,7 +129,7 @@ describe('issues', () => {
     cy.contains(formattedStartDate).should('exist')
   })
 
-  it.skip('test case no. 1', () => {
+  it('test case no. 1', () => {
     const currentDate = new Date();
     const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
     //1				Invalid	Me	Any	Any	NotChosen	NotChosen	Current	LessThenStart	Empty
@@ -169,7 +169,7 @@ describe('issues', () => {
     cy.contains("Due date must be greater than start date").should('exist');
   })
 
-  it.skip('test case no. 14', () => {
+  it('test case no. 14', () => {
     const currentDate = new Date();
     const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
     //14				Valid	Empty	New	New	NotChosen	NotChosen	Current	LessThenStart	Valid
@@ -218,7 +218,7 @@ describe('issues', () => {
     cy.contains("Due date must be greater than start date").should('exist');
   })
 
-  it.skip('test case no. 7', () => {
+  it('test case no. 7', () => {
     const currentDate = new Date();
     const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
     //7				Valid	Me	Empty	New	Chosen	NotChosen	Current	MoreThenStart	Invalid

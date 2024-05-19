@@ -39,7 +39,7 @@ describe('time tracking', () => {
     cy.contains("Hours is invalid").should('exist');
   })
 
-  it.skip('test case no. 1', () => {
+  it('test case no. 1', () => {
     const currentDate = new Date();
     const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
     //1			Empty	Entered	Past	Valid
@@ -72,7 +72,7 @@ describe('time tracking', () => {
     cy.contains(formattedDate).should('exist')
   })
 
-  it.skip('test case no. 7', () => {
+  it('test case no. 7', () => {
     const currentDate = new Date();
     const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
     //7			Entered	Entered	Future	Valid
@@ -109,7 +109,7 @@ describe('time tracking', () => {
     cy.contains(formattedDate).should('exist')
   })
 
-  it.skip('test case no. 2', () => {
+  it('test case no. 2', () => {
     const currentDate = new Date();
     const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
     //2			Entered	Empty	Past	Invalid
@@ -140,7 +140,7 @@ describe('time tracking', () => {
     cy.contains("Hours is invalid").should('exist');
   })
 
-  it.skip('test case no. 4', () => {
+  it('test case no. 4', () => {
     const currentDate = new Date();
     const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
     //4			Empty	Empty	Now	Valid

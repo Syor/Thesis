@@ -3,7 +3,7 @@ describe("newAction", () => {
         cy.tracks_login(Cypress.env("tracks_basicUser"))
     })
 
-    it.skip('test case no. 6', () => {
+    it('test case no. 6', () => {
         const currentDate = new Date();
         const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
         //6	Valid	Empty	HiddenProject	HiddenContext	MultipleTags	Today	Empty	Valid
@@ -72,7 +72,7 @@ describe("newAction", () => {
 
     })  
 
-    it.skip('test case no. 1', () => {
+    it('test case no. 1', () => {
         const currentDate = new Date();
         const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
         //1	Empty	NonEmpty	Empty	HiddenContext	OneTag	Past	Future	Valid
@@ -133,7 +133,7 @@ describe("newAction", () => {
 
     })
 
-    it.skip('test case no. 13', () => {
+    it('test case no. 13', () => {
         const currentDate = new Date();
         const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
         //13	Valid	NonEmpty	Empty	HiddenContext	OneTag	Future	Empty	Empty
@@ -193,7 +193,7 @@ describe("newAction", () => {
 
     })
 
-    it.skip('test case no. 14', () => {
+    it('test case no. 14', () => {
         const currentDate = new Date();
         const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
         //14	Empty	Empty	ActiveProject	ClosedContext	MultipleTags	Future	Future	Valid

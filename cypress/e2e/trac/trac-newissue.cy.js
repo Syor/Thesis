@@ -4,7 +4,7 @@ describe("newIssue" , () => {
         cy.get('a[href="/newticket"]').click();
     })
 
-    it.skip('testcase4', () => {
+    it('testcase4', () => {
         
         //4	Valid	Default	NonEmpty	Task	WithoutDueDate	PastVersion	blocker	component1	FALSE	Empty	NonEmpty	Other  Low
         //summary valid
@@ -96,7 +96,7 @@ describe("newIssue" , () => {
         cy.get('span[class="trac-type"]').find('a').contains(type).should('exist');
     })
 
-    it.skip('testcase1', () => {
+    it('testcase1', () => {
         const currentDate = new Date();
         const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
         //1	Empty	Default	NonEmpty	Enhancement	WithDueDatePast	PastVersion	major	component2	FALSE	NonEmpty	NonEmpty	Empty	High
@@ -156,7 +156,7 @@ describe("newIssue" , () => {
         cy.contains("Tickets must contain a summary.").should('exist');
     })
 
-    it.skip('testcase7', () => {
+    it('testcase7', () => {
         const currentDate = new Date();
         const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
         //7	Valid	Default	Empty	Defect	WithDueDateFuture	PastVersion	critical	component2	TRUE	Empty	NonEmpty	Default	Low
@@ -253,7 +253,7 @@ describe("newIssue" , () => {
         cy.get('li[class="trac-field-attachment"]').should('exist');
     })
 
-    it.skip('testcase10', () => {
+    it('testcase10', () => {
         const currentDate = new Date();
         const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
         //10	Empty	Default	NonEmpty	Defect	WithDueDateFuture	NoDateVersion	minor	component1	TRUE	NonEmpty	NonEmpty	Empty	Low
@@ -314,7 +314,7 @@ describe("newIssue" , () => {
         cy.contains("Tickets must contain a summary.").should('exist');
     })
 
-    it.skip('testcase16', () => {
+    it('testcase16', () => {
         const currentDate = new Date();
         const currentDateString = currentDate.toLocaleDateString('cs-CZ').replace(' ', '') + " " + currentDate.toLocaleTimeString('cs-CZ');
         //16	Valid	Default	NonEmpty	Defect	WithDueDateFuture	NoDateVersion	critical	component1	FALSE	NonEmpty	NonEmpty	Other	Low
